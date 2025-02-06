@@ -1,4 +1,4 @@
-namespace KcalIntakeTracker_KIT
+namespace KcalIntakeTracker_KIT.Models
 {
     public class WeatherForecast
     {

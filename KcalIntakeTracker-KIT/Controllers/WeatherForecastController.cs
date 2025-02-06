@@ -1,3 +1,4 @@
+using KcalIntakeTracker_KIT.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace KcalIntakeTracker_KIT.Controllers
