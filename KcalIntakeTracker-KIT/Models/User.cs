@@ -3,7 +3,7 @@
     public class User
     {
         public int UserId { get; set; }  // Primary Key
-        public string Name { get; set; } = string.Empty;
+        public string Username { get; set; } = string.Empty;
         public double Weight { get; set; }  // kg
         public double FatPercentage { get; set; }  // %
 
