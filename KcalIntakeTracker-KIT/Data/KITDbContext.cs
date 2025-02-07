@@ -23,9 +23,13 @@ namespace KcalIntakeTracker_KIT.Data
                 .WithMany(u => u.DailyLogs)
                 .HasForeignKey(d => d.UserId);
 
-            //modelBuilder.Entity<User>().ToTable("User");
-            //modelBuilder.Entity<FoodItem>().ToTable("FoodItem");
-            //modelBuilder.Entity<DailyLog>().ToTable("DailyLog");
+            modelBuilder.Entity<FoodItem>()
+                .HasKey(f => f.FoodItemId);
+
+            modelBuilder.Entity<FoodItem>()
+                .HasOne(f => f.User)
+                .WithMany(u => u.FoodItems)
+                .HasForeignKey(f => f.UserId);
         }
     }
 }

@@ -9,14 +9,20 @@ using KcalIntakeTracker_KIT.Data;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllers();
-builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<IDailyLogRepository, DailyLogRepository>();
-
-
-// Register KITDbContext
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.ReferenceHandler = 
+        System.Text.Json.Serialization.ReferenceHandler.Preserve;
+    });
 builder.Services.AddDbContext<KITDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("KITDatabase")));
+
+
+// Register the repositories
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IDailyLogRepository, DailyLogRepository>();
+builder.Services.AddScoped<IFoodItemRepository, FoodItemRepository>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

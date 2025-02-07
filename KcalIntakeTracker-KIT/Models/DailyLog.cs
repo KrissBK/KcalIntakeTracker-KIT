@@ -9,7 +9,7 @@ namespace KcalIntakeTracker_KIT.Models
         public int UserId { get; set; }  // Foreign Key
 
 
-        public User User { get; set; } // Navigation Property
+        public required User User { get; set; } // Navigation Property
 
         public DateTime LogDate { get; set; }
         public double TotalProtein { get; set; }
@@ -17,7 +17,6 @@ namespace KcalIntakeTracker_KIT.Models
         public double TotalCarbs { get; set; }
         public double TotalCalories { get; set; }
 
-        
-        //public List<User> Users { get; set; } = new();
+
     }
 }

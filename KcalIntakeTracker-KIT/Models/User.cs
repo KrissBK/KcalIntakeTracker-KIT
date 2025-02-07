@@ -14,6 +14,8 @@ namespace KcalIntakeTracker_KIT.Models
         // Navigation Property
         [JsonIgnore]
         public List<DailyLog> DailyLogs { get; set; } = new();
+
+        public List<FoodItem> FoodItems { get; set; } = new();
     }
 
 }
