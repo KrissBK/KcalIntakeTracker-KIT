@@ -1,4 +1,6 @@
-﻿namespace KcalIntakeTracker_KIT.Models
+﻿using System.Text.Json.Serialization;
+
+namespace KcalIntakeTracker_KIT.Models
 {
     public class User
     {
@@ -10,6 +12,7 @@
         public DateTime UpdatedAt { get; set; } = DateTime.Now;
 
         // Navigation Property
+        [JsonIgnore]
         public List<DailyLog> DailyLogs { get; set; } = new();
     }
 
