@@ -2,6 +2,7 @@
 using KcalIntakeTracker_KIT.Models;
 using KcalIntakeTracker_KIT.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using KcalIntakeTracker_KIT.Dto;
 
 namespace KcalIntakeTracker_KIT.Repository
 {
@@ -24,9 +25,19 @@ namespace KcalIntakeTracker_KIT.Repository
 			return _context.DailyLogs.AsQueryable();
 		}
 
-		public ICollection<DailyLog> GetDailyLogsByUserId(int userId)
-		{
-			return _context.DailyLogs.Where(d => d.UserId == userId).Include(d => d.User).ToList();
-		}
-	}
+        public ICollection<DailyLogDto> GetDailyLogsByUserId(int userId)
+        {
+            return _context.DailyLogs
+                .Where(d => d.UserId == userId)
+                .Include(d => d.User)
+                .Select(d => new DailyLogDto
+                {
+                    LogId = d.LogId,
+                    LogDate = d.LogDate,
+                    TotalCalories = d.TotalCalories,
+                    Username = d.User.Username
+                })
+                .ToList();
+        }
+    }
 }

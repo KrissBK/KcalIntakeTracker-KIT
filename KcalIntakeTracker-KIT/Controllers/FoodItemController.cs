@@ -1,4 +1,5 @@
-﻿using KcalIntakeTracker_KIT.Interfaces;
+﻿using KcalIntakeTracker_KIT.Dto;
+using KcalIntakeTracker_KIT.Interfaces;
 using KcalIntakeTracker_KIT.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -30,8 +31,10 @@ namespace KcalIntakeTracker_KIT.Controllers
             return Ok(foodItems);
         }
 
+
+
         [HttpGet("user/{userId}")]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<FoodItem>))]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<FoodItemDto>))]
         public IActionResult GetFoodItemsByUserId(int userId)
         {
             var items = _foodItemRepository.GetFoodItemsByUserId(userId);

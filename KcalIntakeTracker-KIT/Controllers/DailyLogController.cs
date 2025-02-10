@@ -1,4 +1,5 @@
-﻿using KcalIntakeTracker_KIT.Interfaces;
+﻿using KcalIntakeTracker_KIT.Dto;
+using KcalIntakeTracker_KIT.Interfaces;
 using KcalIntakeTracker_KIT.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -52,7 +53,7 @@ namespace KcalIntakeTracker_KIT.Controllers
         }
 
         [HttpGet("user/{userId}")]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<DailyLog>))]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<DailyLogDto>))]
         public IActionResult GetDailyLogsByUserId(int userId)
         {
             var logs = _dailyLogRepository.GetDailyLogsByUserId(userId);

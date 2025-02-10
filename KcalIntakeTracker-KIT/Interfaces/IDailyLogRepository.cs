@@ -1,4 +1,5 @@
-﻿using KcalIntakeTracker_KIT.Models;
+﻿using KcalIntakeTracker_KIT.Dto;
+using KcalIntakeTracker_KIT.Models;
 
 namespace KcalIntakeTracker_KIT.Interfaces
 {
@@ -6,7 +7,7 @@ namespace KcalIntakeTracker_KIT.Interfaces
     {
         ICollection<DailyLog> GetDailyLogs();
         IQueryable<DailyLog> DailyLogs();
-        ICollection<DailyLog> GetDailyLogsByUserId(int userId);
+        ICollection<DailyLogDto> GetDailyLogsByUserId(int userId);
 
     }
 
