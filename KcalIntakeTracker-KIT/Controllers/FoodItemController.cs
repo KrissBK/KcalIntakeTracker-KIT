@@ -48,9 +48,9 @@ namespace KcalIntakeTracker_KIT.Controllers
 
         [HttpGet("{id}")]
         [ProducesResponseType(200, Type = typeof(IEnumerable<FoodItem>))]
-        public IActionResult GetFoodItems(int id)
+        public IActionResult GetFoodItem(int id)
         {
-            var foodItem = _foodItemRepository.GetFoodItem()
+            var foodItem = _foodItemRepository.GetFoodItems()
                 .FirstOrDefault(f => f.FoodItemId == id);
             if (foodItem == null)
             {

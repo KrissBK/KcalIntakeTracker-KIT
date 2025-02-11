@@ -5,8 +5,8 @@ namespace KcalIntakeTracker_KIT.Interfaces
 {
     public interface IFoodItemRepository
     {
-        ICollection<FoodItem> GetFoodItems();
+        ICollection<FoodItemDto> GetFoodItems();
         ICollection<FoodItemDto> GetFoodItemsByUserId(int userId);
-        IQueryable<FoodItem> GetFoodItem();
+       FoodItemDto  GetFoodItem(int FoodItemId);
     }
 }

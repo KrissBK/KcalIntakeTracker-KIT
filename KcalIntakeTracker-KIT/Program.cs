@@ -1,10 +1,13 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Net.Http.Headers;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using System;
 using KcalIntakeTracker_KIT.Interfaces;
 using KcalIntakeTracker_KIT.Repository;
 using KcalIntakeTracker_KIT.Data;
+using KcalIntakeTracker_KIT.Helper;
+using AutoMapper;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,9 +23,14 @@ builder.Services.AddDbContext<KITDbContext>(options =>
 
 
 // Register the repositories
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IDailyLogRepository, DailyLogRepository>();
 builder.Services.AddScoped<IFoodItemRepository, FoodItemRepository>();
+
+// Add AutoMapper
+//builder.Services.AddAutoMapper(typeof(MappingProfile));
+
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

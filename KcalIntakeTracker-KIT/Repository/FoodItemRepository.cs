@@ -15,9 +15,20 @@ namespace KcalIntakeTracker_KIT.Repository
             _context = context;
         }
 
-        public ICollection<FoodItem> GetFoodItems()
+        public ICollection<FoodItemDto> GetFoodItems()
         {
             return _context.FoodItems
+                .Include(f => f.User)
+                .Select(f => new FoodItemDto
+                {
+                    FoodItemId = f.FoodItemId,
+                    FoodName = f.FoodName,
+                    Protein = f.Protein,
+                    Fat = f.Fat,
+                    Carbohydrates = f.Carbohydrates,
+                    Calories = f.Calories,
+                    Username = f.User.Username
+                })
                 .OrderBy(f => f.FoodItemId)
                 .ToList();
         }
@@ -41,11 +52,24 @@ namespace KcalIntakeTracker_KIT.Repository
                 })
                 .ToList();
         }
-        
 
-        public IQueryable<FoodItem> GetFoodItem()
+
+        public FoodItemDto GetFoodItem(int foodItemId)
         {
-            return _context.FoodItems.AsQueryable();
+            return _context.FoodItems
+                .Where(f => f.FoodItemId == foodItemId)
+                .Include(f => f.User)
+                .Select(f => new FoodItemDto
+                {
+                    FoodItemId = f.FoodItemId,
+                    FoodName = f.FoodName,
+                    Protein = f.Protein,
+                    Fat = f.Fat,
+                    Carbohydrates = f.Carbohydrates,
+                    Calories = f.Calories,
+                    Username = f.User.Username ?? string.Empty
+                })
+                .FirstOrDefault() ?? new FoodItemDto();
         }
     }
 }

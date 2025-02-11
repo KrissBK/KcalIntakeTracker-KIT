@@ -5,7 +5,7 @@
         public int LogId { get; set; }
         public DateTime LogDate { get; set; }
         public double TotalCalories { get; set; }
-        public string Username { get; set; }
+        public string Username { get; set; } = string.Empty;
     }
 
 }
