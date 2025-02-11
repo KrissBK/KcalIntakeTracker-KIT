@@ -71,5 +71,39 @@ namespace KcalIntakeTracker_KIT.Repository
                 })
                 .FirstOrDefault() ?? new FoodItemDto();
         }
+
+        public bool Save()
+        {
+            var saved = _context.SaveChanges();
+            return saved > 0 ? true : false;
+        }
+
+        public bool FoodItemExists(int foodItemId)
+        {
+            return _context.FoodItems.Any(f => f.FoodItemId == foodItemId);
+        }
+
+        public bool CreateFoodItem(FoodItem foodItem)
+        {
+            _context.Add(foodItem);
+
+            return Save();
+        }
+
+        public bool UpdateFoodItem(FoodItem foodItem)
+        {
+            _context.Update(foodItem);
+            return Save();
+        }
+
+        public bool DeleteFoodItem(FoodItem foodItemId)
+        {
+            _context.Remove(foodItemId);
+
+            return Save();
+        }
+
+
+
     }
 }
