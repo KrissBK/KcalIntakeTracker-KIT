@@ -15,10 +15,23 @@ namespace KcalIntakeTracker_KIT.Repository
 			_context = context;
 		}
 
-		public ICollection<DailyLog> GetDailyLogs()
+		public ICollection<DailyLogDto> GetDailyLogs()
 		{
-			return _context.DailyLogs.OrderBy(d => d.LogId).ToList();
-		}
+            return _context.DailyLogs
+                .Include(d => d.User)
+                .Select(d => new DailyLogDto
+                {
+                    LogId = d.LogId,
+                    LogDate = d.LogDate,
+                    TotalProtein = d.TotalProtein,
+                    TotalFat = d.TotalFat,
+                    TotalCarbs = d.TotalCarbs,
+                    TotalCalories = d.TotalCalories,
+                    Username = d.User.Username
+                })
+                .OrderBy(d => d.LogId)
+                .ToList();
+        }
 
 		public IQueryable<DailyLog> DailyLogs()
 		{
@@ -38,6 +51,35 @@ namespace KcalIntakeTracker_KIT.Repository
                     Username = d.User.Username
                 })
                 .ToList();
+        }
+
+        public bool Save()
+        {
+            var saved = _context.SaveChanges();
+            return saved > 0 ? true : false;
+        }
+
+        public bool DailyLogExists(int logId)
+        {
+            return _context.DailyLogs.Any(d => d.LogId == logId);
+        }
+
+        public bool CreateDailyLog(DailyLog dailyLog)
+        {
+            _context.Add(dailyLog);
+            return Save();
+        }
+
+        public bool UpdateDailyLog(DailyLog dailyLog)
+        {
+            _context.Update(dailyLog);
+            return Save();
+        }
+
+        public bool DeleteDailyLog(DailyLog dailyLog)
+        {
+            _context.Remove(dailyLog);
+            return Save();
         }
     }
 }

@@ -105,7 +105,7 @@ namespace KcalIntakeTracker_KIT.Controllers
 
             var foodMap = _mapper.Map<FoodItem>(createFoodItem);
 
-            foodMap.User = user;
+            foodMap.User = _mapper.Map<User>(user);
 
             if (!_foodItemRepository.CreateFoodItem(foodMap))
             {
