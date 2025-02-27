@@ -27,6 +27,8 @@ namespace KcalIntakeTracker_KIT.Repository
                     TotalFat = d.TotalFat,
                     TotalCarbs = d.TotalCarbs,
                     TotalCalories = d.TotalCalories,
+                    Weight = d.User.Weight,
+                    FatPercentage = d.User.FatPercentage,
                     Username = d.User.Username
                 })
                 .OrderBy(d => d.LogId)
@@ -66,9 +68,19 @@ namespace KcalIntakeTracker_KIT.Repository
 
         public bool CreateDailyLog(DailyLog dailyLog)
         {
+            var existingUser = _context.Users.Local.FirstOrDefault(u => u.UserId == dailyLog.User.UserId);
+            if (existingUser != null) // if user is already in context, detach it
+            {
+                _context.Entry(existingUser).State = EntityState.Detached;
+            }
+            _context.Attach(dailyLog.User);
+
+            dailyLog.User.UpdatedAt = DateTime.UtcNow;
+
             _context.Add(dailyLog);
             return Save();
         }
+
 
         public bool UpdateDailyLog(DailyLog dailyLog)
         {

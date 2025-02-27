@@ -23,27 +23,23 @@ namespace KcalIntakeTracker_KIT.Repository
                     UserId = u.UserId,
                     Username = u.Username,
                     //Email = u.Email,
-                    PasswordHash = u.PasswordHash // dette føles veldig feil..
+                    PasswordHash = u.PasswordHash, // dette føles veldig feil..
+                    Weight = u.Weight,
+                    FatPercentage = u.FatPercentage
                 })
                 .OrderBy(u => u.UserId)
                 .ToList();
         }
 
-		public UserDto GetUser(int userId)
-		{
+        public User GetUser(int userId)
+        {
             return _context.Users
-                .Where(u => u.UserId == userId)
-                .Select(u => new UserDto
-                {
-                    UserId = u.UserId,
-                    Username = u.Username,
-                    //Email = u.Email,
-                    PasswordHash = u.PasswordHash // igjen.. veldig feil..
-                })
-                .FirstOrDefault();
+                .FirstOrDefault(u => u.UserId == userId);
         }
 
-		public bool Save()
+
+
+        public bool Save()
 		{
 			var saved = _context.SaveChanges();
 			return saved > 0 ? true : false;

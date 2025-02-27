@@ -12,9 +12,19 @@ namespace KcalIntakeTracker_KIT.Data
         public DbSet<FoodItem> FoodItems { get; set; }
         public DbSet<DailyLog> DailyLogs { get; set; }
 
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<User>()
+                .HasKey(u => u.UserId);
+                //entity.Property(e => e.Weight).IsRequired();
+                //entity.Property(e => e.FatPercentage).IsRequired();
+            
+
+            modelBuilder.Entity<FoodItem>()
+                .HasKey(f => f.FoodItemId);
+
             modelBuilder.Entity<DailyLog>()
                 .HasKey(d => d.LogId);
 
@@ -22,9 +32,6 @@ namespace KcalIntakeTracker_KIT.Data
                 .HasOne(d => d.User)
                 .WithMany(u => u.DailyLogs)
                 .HasForeignKey(d => d.UserId);
-
-            modelBuilder.Entity<FoodItem>()
-                .HasKey(f => f.FoodItemId);
 
             modelBuilder.Entity<FoodItem>()
                 .HasOne(f => f.User)

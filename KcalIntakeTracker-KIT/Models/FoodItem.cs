@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace KcalIntakeTracker_KIT.Models
 {
@@ -6,6 +7,7 @@ namespace KcalIntakeTracker_KIT.Models
     {
 
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int FoodItemId { get; set; }  // Primary Key
         public int UserId { get; set; }  // Foreign Key
 

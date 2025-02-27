@@ -4,7 +4,7 @@ namespace KcalIntakeTracker_KIT.Dto
 {
     public class FoodItemDto
     {
-        [JsonIgnore]
+        
         public int FoodItemId { get; set; }
         public string FoodName { get; set; } = string.Empty;
         public double Protein { get; set; }

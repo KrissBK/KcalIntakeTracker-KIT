@@ -14,16 +14,16 @@ namespace KcalIntakeTracker_KIT.Controllers
     {
         private readonly IDailyLogRepository _dailyLogRepository;
         private readonly IUserRepository _userRepository;
-        private readonly DbContext _context; //usikker på om dette er riktig
+
 
         private readonly IMapper _mapper;
 
-        public DailyLogController(IDailyLogRepository dailyLogRepository, IUserRepository userRepository, IMapper mapper, DbContext context) // Add context parameter
+        public DailyLogController(IDailyLogRepository dailyLogRepository, IUserRepository userRepository, IMapper mapper)
         {
             _dailyLogRepository = dailyLogRepository;
             _userRepository = userRepository;
             _mapper = mapper;
-            _context = context; //usikker på om dette er riktig
+
         }
 
         [HttpGet]
@@ -80,7 +80,6 @@ namespace KcalIntakeTracker_KIT.Controllers
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(422)]
-
         public IActionResult CreateDailyLog([FromQuery] int userId, [FromBody] DailyLogDto createDailyLog)
         {
             if (createDailyLog == null)
@@ -94,19 +93,22 @@ namespace KcalIntakeTracker_KIT.Controllers
             var user = _userRepository.GetUser(userId);
             if (user == null)
             {
-                return NotFound($" User with the ID {userId} not found.");
+                return NotFound($"User with the ID {userId} not found.");
             }
 
-            var dailyLog = _mapper.Map<DailyLog>(createDailyLog); // usikker på om dette er riktig
-            dailyLog.UserId = user.UserId; // usikker på om dette er riktig
-            _context.Entry(user).State = EntityState.Unchanged; // usikker på om dette er riktig
+            // Assign the Weight and FatPercentage values from the User entity
+            createDailyLog.Weight = user.Weight;
+            createDailyLog.FatPercentage = user.FatPercentage;
 
-            if (!_dailyLogRepository.CreateDailyLog(dailyLog))
+            var dailyMap = _mapper.Map<DailyLog>(createDailyLog);
+            dailyMap.User = user; // Directly assign the user entity
+
+            if (!_dailyLogRepository.CreateDailyLog(dailyMap))
             {
                 ModelState.AddModelError("", $"Something went wrong saving the daily log for user {user.Username}");
                 return StatusCode(500, ModelState);
             }
-            return NoContent();
+            return Ok($"Successfully created DailyLog by {user.Username}");
         }
 
 
@@ -116,7 +118,6 @@ namespace KcalIntakeTracker_KIT.Controllers
         [ProducesResponseType(400)]
         [ProducesResponseType(422)]
         [ProducesResponseType(404)]
-
         public IActionResult UpdateDailyLog(int id, [FromBody] DailyLogDto updateDailyLog)
         {
             if (updateDailyLog == null)
@@ -131,6 +132,7 @@ namespace KcalIntakeTracker_KIT.Controllers
             var log = _dailyLogRepository.DailyLogs()
                 .Include(d => d.User)
                 .FirstOrDefault(d => d.LogId == id);
+
             if (log == null)
             {
                 return NotFound();
@@ -138,6 +140,19 @@ namespace KcalIntakeTracker_KIT.Controllers
 
             log.LogDate = updateDailyLog.LogDate;
             log.TotalCalories = updateDailyLog.TotalCalories;
+            log.TotalFat = updateDailyLog.TotalFat;
+            log.TotalProtein = updateDailyLog.TotalProtein;
+            log.TotalCarbs = updateDailyLog.TotalCarbs;
+
+            // Take the Weight and FatPercentage values from the User and update the DailyLogDto
+            updateDailyLog.Weight = log.User.Weight;
+            updateDailyLog.FatPercentage = log.User.FatPercentage;
+
+            var user = log.User;
+            user.Weight = updateDailyLog.Weight;
+            user.FatPercentage = updateDailyLog.FatPercentage;
+
+            _userRepository.UpdateUser(user);
 
             if (!_dailyLogRepository.UpdateDailyLog(log))
             {

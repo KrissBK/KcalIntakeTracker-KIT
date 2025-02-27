@@ -7,7 +7,7 @@ namespace KcalIntakeTracker_KIT.Interfaces
     {
         ICollection<UserDto> GetUsers();
 
-        UserDto GetUser(int userId);
+        User GetUser(int userId);
 
         bool UserExists(int userId);   
 

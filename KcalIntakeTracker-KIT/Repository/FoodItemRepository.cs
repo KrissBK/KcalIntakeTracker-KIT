@@ -85,6 +85,7 @@ namespace KcalIntakeTracker_KIT.Repository
 
         public bool CreateFoodItem(FoodItem foodItem)
         {
+            _context.Attach(foodItem.User);
             _context.Add(foodItem);
 
             return Save();

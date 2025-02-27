@@ -75,7 +75,7 @@ namespace KcalIntakeTracker_KIT.Controllers
             return Ok(foodItem);
         }
 
-  
+
 
 
 
@@ -97,9 +97,9 @@ namespace KcalIntakeTracker_KIT.Controllers
             }
 
             var user = _userRepository.GetUser(userId);
-            if (user == null) 
+            if (user == null)
             {
-                return NotFound($" User with the ID {userId} not found.");
+                return NotFound($"User with the ID {userId} not found.");
             }
 
 
@@ -113,7 +113,7 @@ namespace KcalIntakeTracker_KIT.Controllers
                 return StatusCode(500, ModelState);
             }
 
-            return Ok($"Successfully created {createFoodItem.FoodName}");
+            return Ok($"Successfully created {createFoodItem.FoodName} by {user.Username}");
         }
 
         [HttpPatch("{foodItemId}")]
@@ -139,8 +139,8 @@ namespace KcalIntakeTracker_KIT.Controllers
                 return NotFound($"Food item with the ID {foodItemId} not found.");
             }
 
-            var userExists = _userRepository.UserExists(userId);
-            if (!userExists)
+            var user = _userRepository.GetUser(userId);
+            if (user == null)
             {
                 return NotFound($"User with the ID {userId} not found.");
             }
@@ -155,7 +155,7 @@ namespace KcalIntakeTracker_KIT.Controllers
                 return StatusCode(500, ModelState);
             }
 
-            return Ok($"Successfully updated {updateFoodItemDto.FoodName}");
+            return Ok($"Successfully updated {updateFoodItemDto.FoodName} by {user.Username}");
         }
 
 
