@@ -22,7 +22,7 @@ namespace KcalIntakeTracker_KIT.Repository
                 {
                     UserId = u.UserId,
                     Username = u.Username,
-                    //Email = u.Email,
+                    Email = u.Email,
                     PasswordHash = u.PasswordHash, // dette føles veldig feil..
                     Weight = u.Weight,
                     FatPercentage = u.FatPercentage
