@@ -4,6 +4,7 @@ using KcalIntakeTracker_KIT.Models;
 using Microsoft.AspNetCore.Mvc;
 using KcalIntakeTracker_KIT.Dto;
 using Microsoft.Identity.Client;
+using Microsoft.EntityFrameworkCore;
 
 namespace KcalIntakeTracker_KIT.Controllers
 {

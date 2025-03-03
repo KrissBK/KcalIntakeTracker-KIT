@@ -12,7 +12,7 @@ namespace KcalIntakeTracker_KIT.Models
         public required string Username { get; set; } 
         public required string PasswordHash { get; set; }
         public required string Email { get; set; }
-        public bool EmailVerified { get; set; }
+        public bool EmailVerified { get; set; } = false;
         public double Weight { get; set; }  // kg
         public double FatPercentage { get; set; }  // %
         public DateTime CreatedAt { get; set; } = DateTime.Now;

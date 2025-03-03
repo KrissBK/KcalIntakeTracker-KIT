@@ -18,9 +18,12 @@ namespace KcalIntakeTracker_KIT.Data
 
             modelBuilder.Entity<User>()
                 .HasKey(u => u.UserId);
-                //entity.Property(e => e.Weight).IsRequired();
-                //entity.Property(e => e.FatPercentage).IsRequired();
-            
+            {
+                modelBuilder.Entity<User>()
+                    .HasIndex(u => u.Email)
+                    .IsUnique();
+            }
+
 
             modelBuilder.Entity<FoodItem>()
                 .HasKey(f => f.FoodItemId);
