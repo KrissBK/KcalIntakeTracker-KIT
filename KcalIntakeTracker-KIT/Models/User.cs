@@ -9,10 +9,10 @@ namespace KcalIntakeTracker_KIT.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int UserId { get; set; }  // Primary Key
-        public string Username { get; set; } 
-        public string PasswordHash { get; set; }
-        //public string Email { get; set; }
-        //public int EmailVerified { get; set; }
+        public required string Username { get; set; } 
+        public required string PasswordHash { get; set; }
+        //public required string Email { get; set; }
+        //public required int EmailVerified { get; set; }
         public double Weight { get; set; }  // kg
         public double FatPercentage { get; set; }  // %
         public DateTime CreatedAt { get; set; } = DateTime.Now;

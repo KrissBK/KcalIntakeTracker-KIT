@@ -1,8 +1,8 @@
 ﻿using KcalIntakeTracker_KIT.Data;
 using KcalIntakeTracker_KIT.Models;
 using KcalIntakeTracker_KIT.Interfaces;
-using Microsoft.EntityFrameworkCore;
 using KcalIntakeTracker_KIT.Dto;
+
 
 namespace KcalIntakeTracker_KIT.Repository
 {
@@ -15,8 +15,10 @@ namespace KcalIntakeTracker_KIT.Repository
 			_context = context;
 		}
 
-		public ICollection<DailyLogDto> GetDailyLogs()
+		public ICollection<DailyLog> GetDailyLogs()
 		{
+
+            /*
             return _context.DailyLogs
                 .Include(d => d.User)
                 .Select(d => new DailyLogDto
@@ -30,9 +32,13 @@ namespace KcalIntakeTracker_KIT.Repository
                     Weight = d.User.Weight,
                     FatPercentage = d.User.FatPercentage,
                     Username = d.User.Username
+                    
                 })
                 .OrderBy(d => d.LogId)
-                .ToList();
+                .ToList(); 
+            */
+
+            return _context.DailyLogs.ToList();
         }
 
 		public IQueryable<DailyLog> DailyLogs()
@@ -40,8 +46,10 @@ namespace KcalIntakeTracker_KIT.Repository
 			return _context.DailyLogs.AsQueryable();
 		}
 
-        public ICollection<DailyLogDto> GetDailyLogsByUserId(int userId)
+        public ICollection<DailyLog> GetDailyLogsByUser(int userId)
         {
+
+            /*
             return _context.DailyLogs
                 .Where(d => d.UserId == userId)
                 .Include(d => d.User)
@@ -53,6 +61,10 @@ namespace KcalIntakeTracker_KIT.Repository
                     Username = d.User.Username
                 })
                 .ToList();
+            */
+
+            return _context.DailyLogs.Where(d => d.User.UserId == userId).ToList();
+
         }
 
         public bool Save()
@@ -68,12 +80,12 @@ namespace KcalIntakeTracker_KIT.Repository
 
         public bool CreateDailyLog(DailyLog dailyLog)
         {
-            var existingUser = _context.Users.Local.FirstOrDefault(u => u.UserId == dailyLog.User.UserId);
-            if (existingUser != null) // if user is already in context, detach it
-            {
-                _context.Entry(existingUser).State = EntityState.Detached;
-            }
-            _context.Attach(dailyLog.User);
+           // var existingUser = _context.Users.Local.FirstOrDefault(u => u.UserId == dailyLog.User.UserId);
+            //if (existingUser != null) // if user is already in context, detach it
+            //{
+            //    _context.Entry(existingUser).State = EntityState.Detached;
+            //}
+            //_context.Attach(dailyLog.User);
 
             dailyLog.User.UpdatedAt = DateTime.UtcNow;
 

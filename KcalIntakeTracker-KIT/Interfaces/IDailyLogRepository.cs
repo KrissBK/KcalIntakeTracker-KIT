@@ -5,10 +5,9 @@ namespace KcalIntakeTracker_KIT.Interfaces
 {
     public interface IDailyLogRepository
     {
-        ICollection<DailyLogDto> GetDailyLogs();
+        ICollection<DailyLog> GetDailyLogs();
         IQueryable<DailyLog> DailyLogs();
-        ICollection<DailyLogDto> GetDailyLogsByUserId(int userId);
-
+        ICollection<DailyLog> GetDailyLogsByUser(int userId);
         bool DailyLogExists(int logId);
 
         bool CreateDailyLog(DailyLog dailyLog);

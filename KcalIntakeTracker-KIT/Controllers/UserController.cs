@@ -126,8 +126,8 @@ namespace KcalIntakeTracker_KIT.Controllers
             var user = _mapper.Map<User>(userUpdate);
             user.UserId = userId;
 
-            if (!_userRepository.UpdateUser(user))
-            {
+            if (userUpdate == null)
+                {
                 ModelState.AddModelError("", $"Something went wrong updating the user with the ID {userId}");
                 return StatusCode(500, ModelState);
             }

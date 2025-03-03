@@ -6,7 +6,7 @@ namespace KcalIntakeTracker_KIT.Dto
     {
         
         public int FoodItemId { get; set; }
-        public string FoodName { get; set; } = string.Empty;
+        public required string FoodName { get; set; } = string.Empty;
         public double Protein { get; set; }
         public double Fat { get; set; }
         public double Carbohydrates { get; set; }
